@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 16:34:30 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/13 16:52:18 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/14 17:16:05 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,28 @@ void	ft_cpyenv(char **env_cpy, char **envp)
 
 int ft_initstruct(t_info *info, char **envp)
 {
-	int count;
-	int i;
-	
+	int	count;
+	int	i;
+
 	i = 0;
 	count = 0;
 	while (envp[count])
 		count++;
 	info->cmd_list = NULL;
 	info->env = malloc((count + 1) * (sizeof (char*)));
+	if(!info->env)
+		return (MALLOC_FAIL);
 	while (envp[i])
 	{
 		info->env[i] = malloc((ft_strlen(envp[i]) + 1) * (sizeof(char)));
+		if(!info->env[i])
+		{
+			ft_free(info->env);
+			return (MALLOC_FAIL);
+		}
 		i++;
 	}
+	info->env[i] = NULL;
 	ft_cpyenv(info->env, envp);
-	return (0);
+	return (SUCESS);
 }

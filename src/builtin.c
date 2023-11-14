@@ -6,21 +6,59 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:54:05 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/13 16:42:03 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/14 18:10:11 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void ft_builtinchec(t_cmd *cmd)
+char	*ft_findhome(char **env)
 {
-	if ((!ft_strncmp(cmd->command, "echo", 5)) || \
-	(!ft_strncmp(cmd->command, "cd", 3)) || \
-	(!ft_strncmp(cmd->command, "pwd", 3)) || \
-	(!ft_strncmp(cmd->command, "export", 7)) || \
-	(!ft_strncmp(cmd->command, "unset", 6)) || \
-	(!ft_strncmp(cmd->command, "env", 4)) || \
-	(!ft_strncmp(cmd->command, "exit", 5)))
+	int	i;
+	int	j;
+
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] && env[i][j] != 'H')
+			j++;
+		if (ft_strncmp(env[i], "HOME", 4) == 0)
+			return (&env[i][5]);
+		i++;
+	}
+	return (NULL);
+}
+
+
+int 	ft_cd(char **cmd, char **env)
+{
+	char *home;
+	
+	//check for unset HOME after unset is done
+	if (!cmd[1])
+	{	
+		home = ft_findhome(env);
+		chdir(home);
+		return(SUCESS);
+	}
+	if(chdir(cmd[1]) != 0)
+	{
+		perror("Minishell: cd");
+		return (FAILURE);
+	}
+	return (SUCESS);
+}
+
+void ft_builtincheck(t_cmd *cmd)
+{
+	if ((!ft_strncmp(cmd->command[0], "echo", 5)) || \
+	(!ft_strncmp(cmd->command[0], "cd", 3)) || \
+	(!ft_strncmp(cmd->command[0], "pwd", 3)) || \
+	(!ft_strncmp(cmd->command[0], "export", 7)) || \
+	(!ft_strncmp(cmd->command[0], "unset", 6)) || \
+	(!ft_strncmp(cmd->command[0], "env", 4)) || \
+	(!ft_strncmp(cmd->command[0], "exit", 5)))
 		cmd->built_in = true;
 	else
 		cmd->built_in = false;
@@ -32,9 +70,11 @@ int	ft_env(char **env)
 	
 	i = 0;
 	while(env[i])
-	printf("%s\n", env[0]);
+	{
+	printf("%s\n", env[i]);
 		i++;
-	return (0);
+	}
+	return (SUCESS);
 }
 
 int		ft_pwd(void)
@@ -43,26 +83,26 @@ int		ft_pwd(void)
 
 	getcwd(pwd, PATH_MAX);
 	printf("%s\n", pwd);
-	return (0);
+	return (SUCESS);
 }
 
 int	ft_executebuiltin(t_cmd *cmd, char **env)
 {
-	if (!ft_strncmp(cmd->command, "echo", 5))
+	if (!ft_strncmp(cmd->command[0], "echo", 5))
 		return (0);
-	if (!ft_strncmp(cmd->command, "cd", 3)) 
-		return (0);
-	if (!ft_strncmp(cmd->command, "pwd", 3))
+	if (!ft_strncmp(cmd->command[0], "cd", 3)) 
+		return (ft_cd(cmd->command, env));
+	if (!ft_strncmp(cmd->command[0], "pwd", 3))
 		return (ft_pwd()); 
-	if (!ft_strncmp(cmd->command, "export", 7))
+	if (!ft_strncmp(cmd->command[0], "export", 7))
 		return (0); 
-	if (!ft_strncmp(cmd->command, "unset", 6))
+	if (!ft_strncmp(cmd->command[0], "unset", 6))
 		return (0);
-	if (!ft_strncmp(cmd->command, "env", 4))
+	if (!ft_strncmp(cmd->command[0], "env", 4))
 		return (ft_env(env));
-	if (!ft_strncmp(cmd->command, "exit", 5))
-		return (0);
+	if (!ft_strncmp(cmd->command[0], "exit", 5))
+		exit(0);
 	return (0);
-	if (env)
-		return (0);
+	if (!env)
+		return (FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:48:14 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/13 18:01:20 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/14 17:08:47 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,24 +99,22 @@ char	*truepath(char *cmd, char **env)
 int	ft_execute(t_cmd *cmd, char **env)
 {
 	char	*path;
-	char	**s_cmd;
-
-	s_cmd = ft_split(cmd->command, ' ');
+	
 	if (cmd->built_in == true)
-	{
+	{	
 		ft_executebuiltin(cmd, env);
-		return (0);
+		return (SUCESS);
 	}
-	path = truepath(cmd->command, env);
+	path = truepath(cmd->command[0], env);
 	if (!path)
 	{
 		ft_putstr_fd("Command not found :", 2);
-		ft_putendl_fd(cmd->command, 2);
-		ft_free(s_cmd);
-		return(1);
+		ft_putendl_fd(cmd->command[0], 2);
+		ft_free(cmd->command);
+		return(FAILURE);
 	}
 	cmd->pid = fork();
 	if (cmd->pid == 0)
-		execve(path, s_cmd, env);
-	return (0);
+		execve(path, cmd->command, env);
+	return (SUCESS);
 }
