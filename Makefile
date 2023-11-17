@@ -7,7 +7,8 @@ EXECUTION = ./src/execution/execution.c
 SRC =	./src/main.c\
 		./src/execution.c\
 		./src/builtin.c\
-		.src/init.c
+		.src/init.c\
+		.src/unset.c
 		
 	
 OBJ_DIR = obj
@@ -21,12 +22,19 @@ YELLOW = \033[0;33m
 RED = \033[0;30m
 NC = \033[0m
 
+INCDIR = include
+
+#--- READLINE ---#
+HISTORYLIB    =    readline/libhistory.a
+READLINELIB    =    readline/libreadline.a
+ANBOISVE = $(shell test -e include/readline/libreadline.a ; echo "$$?")
+
 ${NAME}:$(OBJ_DIR) ${OBJS} ${LDIR}${LIBFT}
-		@$(CC) $(CFLAGS) $(OBJS) -lreadline ${LDIR}${LIBFT} -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJS) ${LDIR}${LIBFT} -L$(INCDIR)/readline/ -lreadline -lncurses -o $(NAME)
 		@printf "\r${GREEN}Compilation complete.\n"
 
 
-all:${NAME}
+all: rl ${NAME}
 
 $(OBJ_DIR)/%.o: src/%.c
 	@printf "${GREEN}Compiling: ${YELLOW}$(CC) $(CFLAGS) -c $< -o $@"
@@ -39,17 +47,31 @@ $(OBJ_DIR):
 
 ${LDIR}${LIBFT}:
 	${MAKE} -C ${LDIR}
-	
+
+rl:
+	@if test $(ANBOISVE) = 1 ; then \
+		cd include/readline && ./configure && make ; \
+	else \
+		echo "$(GREEN)readline all ready make.$(RESET)" ; sleep 1; \
+	fi
+
+readline:
+	@cd include/readline && ./configure && $(MAKE)
+	@$(MAKE)
+
+readline_remove: fclean
+	@cd include/readline && $(MAKE) distclean
+
 clean :
 		@${REMOVE} ${OBJS}
 		@${MAKE} -C ${LDIR} clean
 		@echo "${RED}Object files removed."
 	
-
 fclean :clean
 		@${REMOVE} ${NAME}
 		@${MAKE} -C ${LDIR} fclean
 		@echo "${RED}Executable removed."
+
 re:fclean all
  
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:54:05 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/14 18:10:11 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/17 15:43:11 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	ft_env(char **env)
 	i = 0;
 	while(env[i])
 	{
-	printf("%s\n", env[i]);
-		i++;
+		printf("%s\n", env[i]);
+			i++;
 	}
 	return (SUCESS);
 }
@@ -97,7 +97,7 @@ int	ft_executebuiltin(t_cmd *cmd, char **env)
 	if (!ft_strncmp(cmd->command[0], "export", 7))
 		return (0); 
 	if (!ft_strncmp(cmd->command[0], "unset", 6))
-		return (0);
+		return (ft_unset(cmd->command, env));
 	if (!ft_strncmp(cmd->command[0], "env", 4))
 		return (ft_env(env));
 	if (!ft_strncmp(cmd->command[0], "exit", 5))

@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:03:19 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/13 16:46:53 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/17 12:25:24 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "execution.h"
 # include "struct.h"
 # include "../libft/libftps.h"
+# include "builtin.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -25,8 +26,8 @@
 # include <sys/file.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "readline/history.h"
+# include "readline/readline.h"
 
 void	ft_builtincheck(t_cmd *cmd);
 void	ft_cpyenv(char **env_cpy, char **envp);
