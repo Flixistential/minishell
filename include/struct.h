@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oldrolet <oldrolet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:26:47 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/18 00:02:15 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:55:46 by oldrolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-enum error_list{
+enum e_error_list{
 	FAILURE,
 	SUCESS,
 	MALLOC_FAIL,
@@ -30,7 +30,7 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	char			*token;
-	pid_t 			pid;
+	pid_t			pid;
 	struct s_cmd	*next;
 	bool			built_in;
 }			t_cmd;
@@ -41,6 +41,6 @@ typedef struct s_info
 	char			**env;
 }			t_info;
 
-int ft_initstruct(t_info *info, char **envp);
+int	ft_initstruct(t_info *info, char **envp);
 
 #endif

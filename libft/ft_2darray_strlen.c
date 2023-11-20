@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_2darray_strlen.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oldrolet <oldrolet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 11:36:00 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/20 15:54:54 by oldrolet         ###   ########.fr       */
+/*   Created: 2023/11/20 15:58:22 by oldrolet          #+#    #+#             */
+/*   Updated: 2023/11/20 15:58:43 by oldrolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "libftps.h"
 
-# include "minishell.h"
+size_t	ft_x2strlen(char **s)
+{
+	size_t	i;
 
-int		ft_pwd(void);
-int		ft_executebuiltin(t_info *inf);
-int		ft_env(char **env);
-int		ft_cd(char **cmd, char **env);
-char	*ft_findhome(char **env);
-int		ft_unset(t_info *inf);
-char	**unset_var(t_info *inf, int unset_index);
-int		env_finder(char *str, char **env);
-int		env_len(char **env);
-
-#endif
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
+}

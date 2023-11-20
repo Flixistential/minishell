@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oldrolet <oldrolet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:54:05 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/18 00:05:42 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/20 16:03:32 by oldrolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ char	*ft_findhome(char **env)
 	return (NULL);
 }
 
+//check for unset HOME after unset is done
 
-int 	ft_cd(char **cmd, char **env)
+int	ft_cd(char **cmd, char **env)
 {
-	char *home;
-	
-	//check for unset HOME after unset is done
+	char	*home;
+
 	if (!cmd[1])
-	{	
+	{
 		home = ft_findhome(env);
 		chdir(home);
-		return(SUCESS);
+		return (SUCESS);
 	}
-	if(chdir(cmd[1]) != 0)
+	if (chdir(cmd[1]) != 0)
 	{
 		perror("Minishell: cd");
 		return (FAILURE);
@@ -50,7 +50,7 @@ int 	ft_cd(char **cmd, char **env)
 	return (SUCESS);
 }
 
-void ft_builtincheck(t_cmd *cmd)
+void	ft_builtincheck(t_cmd *cmd)
 {
 	if ((!ft_strncmp(cmd->cmd[0], "echo", 5)) || \
 	(!ft_strncmp(cmd->cmd[0], "cd", 3)) || \
@@ -66,18 +66,18 @@ void ft_builtincheck(t_cmd *cmd)
 
 int	ft_env(char **env)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		printf("%s\n", env[i]);
-			i++;
+		i++;
 	}
 	return (SUCESS);
 }
 
-int		ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	pwd[PATH_MAX];
 

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oldrolet <oldrolet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:48:14 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/18 00:03:30 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/20 16:02:27 by oldrolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include  "../include/execution.h"
+#include "../include/execution.h"
 
 char	*ft_strjoinslash(char const *s1, char const *s2)
 {
@@ -60,7 +60,6 @@ char	*pathfinder(char **env)
 	return (NULL);
 }
 
-
 void	free_cmdpath(char **s_path, char **s_cmd)
 {
 	ft_free(s_cmd);
@@ -99,9 +98,9 @@ char	*truepath(char *cmd, char **env)
 int	ft_execute(t_info *inf)
 {
 	char	*path;
-	
+
 	if (inf->cmd_list->built_in == true)
-	{	
+	{
 		ft_executebuiltin(inf);
 		return (SUCESS);
 	}
@@ -111,7 +110,7 @@ int	ft_execute(t_info *inf)
 		ft_putstr_fd("Command not found :", 2);
 		ft_putendl_fd(inf->cmd_list->cmd[0], 2);
 		ft_free(inf->cmd_list->cmd);
-		return(FAILURE);
+		return (FAILURE);
 	}
 	inf->cmd_list->pid = fork();
 	if (inf->cmd_list->pid == 0)

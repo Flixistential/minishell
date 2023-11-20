@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oldrolet <oldrolet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:30:13 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/20 12:36:13 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/20 16:04:43 by oldrolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
-	t_cmd 	cmd;
-	int i;
-	char *str;
-	
+	t_cmd	cmd;
+	int		i;
+	char	*str;
+
 	i = argc;
-	if(argv)
+	if (argv)
 		i++;
 	ft_initstruct(&info, envp);
  	while (true)
