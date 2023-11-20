@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:54:05 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/17 15:43:11 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/18 00:05:42 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int 	ft_cd(char **cmd, char **env)
 
 void ft_builtincheck(t_cmd *cmd)
 {
-	if ((!ft_strncmp(cmd->command[0], "echo", 5)) || \
-	(!ft_strncmp(cmd->command[0], "cd", 3)) || \
-	(!ft_strncmp(cmd->command[0], "pwd", 3)) || \
-	(!ft_strncmp(cmd->command[0], "export", 7)) || \
-	(!ft_strncmp(cmd->command[0], "unset", 6)) || \
-	(!ft_strncmp(cmd->command[0], "env", 4)) || \
-	(!ft_strncmp(cmd->command[0], "exit", 5)))
+	if ((!ft_strncmp(cmd->cmd[0], "echo", 5)) || \
+	(!ft_strncmp(cmd->cmd[0], "cd", 3)) || \
+	(!ft_strncmp(cmd->cmd[0], "pwd", 3)) || \
+	(!ft_strncmp(cmd->cmd[0], "export", 7)) || \
+	(!ft_strncmp(cmd->cmd[0], "unset", 6)) || \
+	(!ft_strncmp(cmd->cmd[0], "env", 4)) || \
+	(!ft_strncmp(cmd->cmd[0], "exit", 5)))
 		cmd->built_in = true;
 	else
 		cmd->built_in = false;
@@ -86,23 +86,23 @@ int		ft_pwd(void)
 	return (SUCESS);
 }
 
-int	ft_executebuiltin(t_cmd *cmd, char **env)
+int	ft_executebuiltin(t_info *inf)
 {
-	if (!ft_strncmp(cmd->command[0], "echo", 5))
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "echo", 5))
 		return (0);
-	if (!ft_strncmp(cmd->command[0], "cd", 3)) 
-		return (ft_cd(cmd->command, env));
-	if (!ft_strncmp(cmd->command[0], "pwd", 3))
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "cd", 3)) 
+		return (ft_cd(inf->cmd_list->cmd, inf->env));
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "pwd", 4))
 		return (ft_pwd()); 
-	if (!ft_strncmp(cmd->command[0], "export", 7))
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "export", 7))
 		return (0); 
-	if (!ft_strncmp(cmd->command[0], "unset", 6))
-		return (ft_unset(cmd->command, env));
-	if (!ft_strncmp(cmd->command[0], "env", 4))
-		return (ft_env(env));
-	if (!ft_strncmp(cmd->command[0], "exit", 5))
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "unset", 6))
+		return (ft_unset(inf));
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "env", 4))
+		return (ft_env(inf->env));
+	if (!ft_strncmp(inf->cmd_list->cmd[0], "exit", 5))
 		exit(0);
 	return (0);
-	if (!env)
+	if (!inf->env)
 		return (FAILURE);
 }

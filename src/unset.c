@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:11:24 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/17 15:42:33 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/20 13:18:22 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int env_len(char **env)
 	return (i);
 }
 
-char	**unset_var(int unset_index, char **env)
+char	**unset_var(t_info *inf, int unset_index)
 {
 	int		i;
 	int		j;
@@ -30,23 +30,23 @@ char	**unset_var(int unset_index, char **env)
 
 	i = 0;
 	j = 0;
-	if (!(new_env = malloc(env_len(env) * sizeof(char *))))
+	if (!(new_env = malloc(env_len(inf->env) * sizeof(char *))))
 		return (NULL);
-	while (env[i])
+	while (inf->env[i])
 	{
 		if (i == unset_index)
 		{
-			if ((env[unset_index + 1]))
+			if ((inf->env[unset_index + 1]))
 				i++;
 			else
 				break;
 		}
-		new_env[j] = ft_strdup(env[i]);
+		new_env[j] = ft_strdup(inf->env[i]);
 		i++;
-		j++;
+		j++;		
 	}
-	ft_free(env);
-	new_env[i] = NULL;
+	ft_free(inf->env);
+	new_env[j] = NULL;
 	return (new_env);
 }
 
@@ -71,33 +71,21 @@ int	env_finder(char *str, char **env)
 	return (-1);
 }
 
-int ft_unset(char **cmd, char **env)
+int ft_unset(t_info *inf)
 {
     int i;
     int j;
 
-	/*i = 0;
-	while (env[i])
-	{
-		printf("ENV 1 ======= %s\n", env[i]);
-		i++;
-	}*/
     i = 1;
-    if (!cmd[1] || !env)
+    if (!inf->cmd_list->cmd[1] || !inf->env)
         return(SUCESS);
-    while(cmd[i])
+    while(inf->cmd_list->cmd[i])
     {
-        j = env_finder(cmd[i], env);
-		printf("%d\n", j);
+        j = env_finder(inf->cmd_list->cmd[i], inf->env);
         if (0 <= j)
-            env = unset_var(j , env);
+            inf->env = unset_var(inf, j);
         i++;
     }
 	i = 0;
-	while (env[i])
-	{
-		printf("ENV 2 ======= %s\n", env[i]);
-		i++;
-	}
 	return (0);
 }

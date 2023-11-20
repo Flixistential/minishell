@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:48:14 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/17 15:49:27 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/18 00:03:30 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,25 +96,25 @@ char	*truepath(char *cmd, char **env)
 	return (NULL);
 }
 
-int	ft_execute(t_cmd *cmd, char **env)
+int	ft_execute(t_info *inf)
 {
 	char	*path;
 	
-	if (cmd->built_in == true)
+	if (inf->cmd_list->built_in == true)
 	{	
-		ft_executebuiltin(cmd, env);
+		ft_executebuiltin(inf);
 		return (SUCESS);
 	}
-	path = truepath(cmd->command[0], env);
+	path = truepath(inf->cmd_list->cmd[0], inf->env);
 	if (!path)
 	{
 		ft_putstr_fd("Command not found :", 2);
-		ft_putendl_fd(cmd->command[0], 2);
-		ft_free(cmd->command);
+		ft_putendl_fd(inf->cmd_list->cmd[0], 2);
+		ft_free(inf->cmd_list->cmd);
 		return(FAILURE);
 	}
-	cmd->pid = fork();
-	if (cmd->pid == 0)
-		execve(path, cmd->command, env);
+	inf->cmd_list->pid = fork();
+	if (inf->cmd_list->pid == 0)
+		execve(path, inf->cmd_list->cmd, inf->env);
 	return (SUCESS);
 }

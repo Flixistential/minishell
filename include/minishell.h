@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:03:19 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/17 12:25:24 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/17 23:42:53 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/file.h>
 # include <sys/stat.h>

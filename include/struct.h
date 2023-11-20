@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:26:47 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/17 12:52:46 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/18 00:02:15 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ enum error_list{
 
 typedef struct s_cmd
 {
-	char			**command;
+	char			**cmd;
 	char			*token;
 	pid_t 			pid;
 	struct s_cmd	*next;
