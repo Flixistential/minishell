@@ -8,7 +8,8 @@ SRC =	./src/main.c\
 		./src/execution.c\
 		./src/builtin.c\
 		.src/init.c\
-		.src/unset.c
+		.src/unset.c\
+		./src/export.c
 		
 	
 OBJ_DIR = obj

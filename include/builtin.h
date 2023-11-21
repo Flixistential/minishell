@@ -12,6 +12,8 @@ char	*ft_findhome(char **env);
 int		ft_unset(t_info *inf);
 char	**unset_var(t_info *inf, int unset_index);
 int		env_finder(char *str, char **env);
+int 	export(t_info *inf);
 int		env_len(char **env);
+int 	ft_dupenv(char **dup_env, char **env);
 
 #endif

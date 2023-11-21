@@ -10,9 +10,6 @@ enum e_error_list{
 	FAILURE,
 	SUCESS,
 	MALLOC_FAIL,
-	AHJSKDHIA,
-	AFSDF = 400,
-	ADJASDJK
 };
 
 typedef struct s_cmd

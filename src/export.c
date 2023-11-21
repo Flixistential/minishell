@@ -1,4 +1,148 @@
 
 #include "../include/minishell.h"
+#include "../libft/libftps.h"
 
-int 
+char **ft_exportvar(inf)
+{
+	int		i;
+	int		j;
+	char	**new_env;
+
+	i = 0;
+	j = 0;
+	if (!(new_env = malloc((env_len(inf->env) + 1) * sizeof(char *))))
+		return (NULL);
+	while (inf->env[i])	
+	{
+		new_env[j] = ft_strdup(inf->env[i]);
+		i++;
+		j++;
+	}
+}
+
+char	**unset_var(t_info *inf, int unset_index)
+{
+	int		i;
+	int		j;
+	char	**new_env;
+
+	i = 0;
+	j = 0;
+	if (!(new_env = malloc(env_len(inf->env) * sizeof(char *))))
+		return (NULL);
+	while (inf->env[i])
+	{
+		if (i == unset_index)
+		{
+			if ((inf->env[unset_index + 1]))
+				i++;
+			else
+				break;
+		}
+		new_env[j] = ft_strdup(inf->env[i]);
+		i++;
+		j++;		
+	}
+	ft_free(inf->env);
+	new_env[j] = NULL;
+	return (new_env);
+}
+
+int print_exp(char **alp_env)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (alp_env[i])
+	{
+		ft_putstr_fd("declare -x ", 1);
+		while (alp_env[i][j] && alp_env[i][j - 1] != '=')
+		{
+			ft_putchar_fd(alp_env[i][j], 1);
+			j++;
+		}
+		if (alp_env[i][j - 1] == '=')
+		{
+			ft_putchar_fd('"', 1);
+			while (alp_env[i][j])
+			{
+				ft_putchar_fd(alp_env[i][j], 1);
+				j++;
+			}
+			ft_putchar_fd('"', 1);
+		}
+		ft_putchar_fd('\n', 1);
+		j = 0;
+		i++;
+	}
+	return (SUCESS);
+}
+
+int is_sorted_alpha(char **alp_env)
+{
+	int i;
+
+	i = 0;
+	while(alp_env[i] && alp_env[i + 1])
+	{
+		if (alp_env[i][0] > alp_env[i + 1][0])
+			return (FAILURE);
+		i++;
+	}
+	return (SUCESS);
+}
+
+int bbl_srt_alp(char **alp_env)
+{
+	int		i;
+	char	*temp;
+
+	while (!is_sorted_alpha(alp_env))
+	{
+		i = 0;
+		while (alp_env[i] && alp_env[i + 1])
+		{
+			if (alp_env[i][0] > alp_env[i + 1][0])
+			{
+				temp = alp_env[i + 1];
+				alp_env[i + 1] = alp_env[i];
+				alp_env[i] = temp;
+			}
+			i++;
+		}
+	}
+	return (SUCESS);
+}
+
+int ft_dupenv(char **dup_env, char **env)
+{
+	int i;
+
+	i = 0;
+	while (env[i])
+	{
+		dup_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	dup_env[i] = NULL;
+	return (0);
+}
+
+int export(t_info *inf)
+{
+    char **alp_env;
+
+    if (!inf->cmd_list->cmd[1])
+    {
+        alp_env = malloc((ft_x2strlen(inf->env) + 1) * (sizeof(char *)));
+        ft_dupenv(alp_env, inf->env);
+        bbl_srt_alp(alp_env);
+        print_exp(alp_env);
+		ft_free_2darray(alp_env);
+    }
+		else if((ft_exportvar(inf)));
+			return (SUCESS);
+}
+

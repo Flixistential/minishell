@@ -83,7 +83,7 @@ int	ft_executebuiltin(t_info *inf)
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "pwd", 4))
 		return (ft_pwd()); 
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "export", 7))
-		return (0); 
+		return (export(inf)); 
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "unset", 6))
 		return (ft_unset(inf));
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "env", 4))
