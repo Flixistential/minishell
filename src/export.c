@@ -2,49 +2,29 @@
 #include "../include/minishell.h"
 #include "../libft/libftps.h"
 
-char **ft_exportvar(inf)
+char **ft_exportvar(t_info *inf)
 {
 	int		i;
-	int		j;
+	int 	j;
 	char	**new_env;
-
+	
+	j = 1;
 	i = 0;
-	j = 0;
-	if (!(new_env = malloc((env_len(inf->env) + 1) * sizeof(char *))))
+	if (!(new_env = malloc((env_len(inf->env) + env_len(inf->cmd_list->cmd)) * sizeof(char *))))
 		return (NULL);
 	while (inf->env[i])	
 	{
-		new_env[j] = ft_strdup(inf->env[i]);
+		new_env[i] = ft_strdup(inf->env[i]);
+		i++;
+	}
+	while(inf->cmd_list->cmd[j])
+	{
+		new_env[i] = strdup(inf->cmd_list->cmd[j]);
 		i++;
 		j++;
 	}
-}
-
-char	**unset_var(t_info *inf, int unset_index)
-{
-	int		i;
-	int		j;
-	char	**new_env;
-
-	i = 0;
-	j = 0;
-	if (!(new_env = malloc(env_len(inf->env) * sizeof(char *))))
-		return (NULL);
-	while (inf->env[i])
-	{
-		if (i == unset_index)
-		{
-			if ((inf->env[unset_index + 1]))
-				i++;
-			else
-				break;
-		}
-		new_env[j] = ft_strdup(inf->env[i]);
-		i++;
-		j++;		
-	}
-	ft_free(inf->env);
-	new_env[j] = NULL;
+	new_env[i] = NULL;
+	ft_free_2darray(inf->env);
 	return (new_env);
 }
 
@@ -142,7 +122,8 @@ int export(t_info *inf)
         print_exp(alp_env);
 		ft_free_2darray(alp_env);
     }
-		else if((ft_exportvar(inf)));
-			return (SUCESS);
+	else
+		inf->env = ft_exportvar(inf);
+	return (SUCESS);
 }
 

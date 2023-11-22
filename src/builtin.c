@@ -1,5 +1,21 @@
 #include "../include/minishell.h"
 
+int	ft_hasequal(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (FAILURE);
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (SUCESS);
+		i++;
+	}
+	return (FAILURE);
+}
+
 char	*ft_findhome(char **env)
 {
 	int	i;
@@ -59,7 +75,8 @@ int	ft_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		if (ft_hasequal(env[i]))
+			printf("%s\n", env[i]);
 		i++;
 	}
 	return (SUCESS);

@@ -15,5 +15,6 @@ int		env_finder(char *str, char **env);
 int 	export(t_info *inf);
 int		env_len(char **env);
 int 	ft_dupenv(char **dup_env, char **env);
+int		ft_hasequal(char *str);
 
 #endif

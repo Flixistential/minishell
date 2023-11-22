@@ -38,10 +38,9 @@ ${NAME}:$(OBJ_DIR) ${OBJS} ${LDIR}${LIBFT}
 all: rl ${NAME}
 
 $(OBJ_DIR)/%.o: src/%.c
-	@printf "${GREEN}Compiling: ${YELLOW}$(CC) $(CFLAGS) -c $< -o $@"
-
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@printf "\r\033[K"  # Clear the line
+	@printf "${GREEN}Compiling: ${YELLOW}$(CC) $(CFLAGS) -c $< -o $@\n"
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+	@printf "\r\033[K"
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
