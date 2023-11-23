@@ -126,4 +126,3 @@ int export(t_info *inf)
 		inf->env = ft_exportvar(inf);
 	return (SUCESS);
 }
-
