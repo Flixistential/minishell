@@ -16,6 +16,6 @@ int 	export(t_info *inf);
 int		env_len(char **env);
 int 	ft_dupenv(char **dup_env, char **env);
 int		ft_hasequal(char *str);
-char    **valid_new_var(t_info inf)
+int		ft_strcmp_equal(const char *s1, const char *s2);
 
 #endif

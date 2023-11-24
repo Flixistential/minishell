@@ -24,7 +24,7 @@ typedef struct s_cmd
 typedef struct s_info
 {
 	t_cmd			*cmd_list;
-	char 			**new_var;
+	char 			**new_env;
 	char			**env;
 }			t_info;
 

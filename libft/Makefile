@@ -50,7 +50,8 @@ src =		ft_atoi.c\
 			ft_lstclear.c\
 			ft_lstiter.c\
 			ft_2darray_strlen.c\
-			ft_free_2darray.c
+			ft_free_2darray.c\
+			ft_null_2darray.c
 OBJS 	= ${src:.c=.o}
 LIBC 	= ar rcs
 REMOVE	= rm -f

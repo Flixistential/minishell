@@ -2,11 +2,46 @@
 #include "../include/minishell.h"
 #include "../libft/libftps.h"
 
-char	**valid_new_var(t_info inf)
+void exp_last_var(t_info *inf, int last_i, char ***new_env)
 {
-	inf.cmd_list->cmd
+	int i;
+	
+	int j;
+	i = 0;
+	j = 1;
+	while (inf->cmd_list->cmd[j])
+	{
+		while (inf->env[i])
+		{
+		if ((ft_strcmp_equal (inf->env[i], inf->cmd_list->cmd[j])))
+			j++;
+		if(!inf->cmd_list->cmd[j])
+			break;
+		i++;
+		if (!inf->env[i] && inf->cmd_list->cmd[j])
+		{	
+			new_env[0][last_i] = ft_strdup(inf->cmd_list->cmd[j]);
+			j++;
+			last_i++;
+		}
+	}
+	i = 0;
+	}
+}
 
-	inf.env
+int	ft_strcmp_equal(const char *s1, const char *s2)
+{
+	unsigned int	i;
+
+	i = 0;
+	
+	while ((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	if (i == 0)
+		return (FAILURE);
+	if (s2[i] == '=' || (!s1[i] && !s2[i]) || (s1[i - 1] == '=' && s2[i - 1] == '='))
+		return (SUCESS);
+	return (FAILURE);
 }
 
 char **ft_exportvar(t_info *inf)
@@ -14,23 +49,26 @@ char **ft_exportvar(t_info *inf)
 	int		i;
 	int 	j;
 	char	**new_env;
-	
+
 	j = 1;
 	i = 0;
-	if (!(new_env = malloc((env_len(inf->env) + env_len(new_var)) * sizeof(char *))))
+	if (!(new_env = malloc((env_len(inf->env) + env_len(inf->cmd_list->cmd)) * sizeof(char *))))
 		return (NULL);
+	ft_null_2darray(&new_env, (env_len(inf->env) + env_len(inf->cmd_list->cmd)));
 	while (inf->env[i])	
 	{
-		new_env[i] = ft_strdup(inf->env[i]);
+		while (inf->cmd_list->cmd[j])
+		{
+			if (ft_strcmp_equal (inf->env[i],inf->cmd_list->cmd[j]))
+				new_env[i] = ft_strdup(inf->cmd_list->cmd[j]);
+			j++;
+		}
+		if (!new_env[i])
+			new_env[i] = ft_strdup(inf->env[i]);
+		j = 1;
 		i++;
 	}
-	while(inf->cmd_list->cmd[j])
-	{
-		new_env[i] = strdup(inf->cmd_list->cmd[j]);
-		i++;
-		j++;
-	}
-	new_env[i] = NULL;
+	exp_last_var(inf, i, &new_env);
 	ft_free_2darray(inf->env);
 	return (new_env);
 }
@@ -130,8 +168,6 @@ int export(t_info *inf)
 		ft_free_2darray(alp_env);
     }
 	else
-	{	inf->new_var = valid_new_var(inf)
 		inf->env = ft_exportvar(inf);
-	}
 	return (SUCESS);
 }

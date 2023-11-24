@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:08:04 by fboivin           #+#    #+#             */
-/*   Updated: 2023/11/21 15:06:38 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/24 15:35:00 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int		ft_isspace(char c);
 char	**ft_free(char **split);
 size_t	ft_x2strlen(char **s);
 void	*ft_free_2darray(char **array);
+void	ft_null_2darray(char ***array, int size);
 
 #endif  //LIBFTPS_H
