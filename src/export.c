@@ -2,6 +2,13 @@
 #include "../include/minishell.h"
 #include "../libft/libftps.h"
 
+char	**valid_new_var(t_info inf)
+{
+	inf.cmd_list->cmd
+
+	inf.env
+}
+
 char **ft_exportvar(t_info *inf)
 {
 	int		i;
@@ -10,7 +17,7 @@ char **ft_exportvar(t_info *inf)
 	
 	j = 1;
 	i = 0;
-	if (!(new_env = malloc((env_len(inf->env) + env_len(inf->cmd_list->cmd)) * sizeof(char *))))
+	if (!(new_env = malloc((env_len(inf->env) + env_len(new_var)) * sizeof(char *))))
 		return (NULL);
 	while (inf->env[i])	
 	{
@@ -123,6 +130,8 @@ int export(t_info *inf)
 		ft_free_2darray(alp_env);
     }
 	else
+	{	inf->new_var = valid_new_var(inf)
 		inf->env = ft_exportvar(inf);
+	}
 	return (SUCESS);
 }

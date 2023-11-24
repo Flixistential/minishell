@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 12:56:06 by fboivin           #+#    #+#             */
-/*   Updated: 2023/08/28 18:57:15 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/23 14:46:03 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ int	ft_len(unsigned int n)
 
 	nb = n;
 	count = 0;
-	if (n < 0)
-	{
-		count++;
-		nb = -nb;
-	}
 	while (nb > 9)
 	{
 		nb = nb / 10;

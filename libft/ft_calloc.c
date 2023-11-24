@@ -6,7 +6,7 @@
 /*   By: fboivin <fboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:47:37 by fboivin           #+#    #+#             */
-/*   Updated: 2023/10/03 10:02:02 by fboivin          ###   ########.fr       */
+/*   Updated: 2023/11/23 14:45:47 by fboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	char		*ptr;
-	size_t		i;
-
-	i = 0;
+	
 	ptr = (char *)malloc(count * size);
 	if (ptr == 0)
 		return (NULL);
