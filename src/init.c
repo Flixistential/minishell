@@ -1,6 +1,7 @@
 
 #include "../include/minishell.h"
 
+
 void	ft_cpyenv(char **env_cpy, char **envp)
 {
 	int i;
