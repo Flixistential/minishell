@@ -104,6 +104,10 @@ int	ft_execute(t_info *inf)
 	}
 	inf->cmd_list->pid = fork();
 	if (inf->cmd_list->pid == 0)
+	{
+		dup2(inf->cmd_list->fd_in, STDIN_FILENO);
+		dup2(inf->cmd_list->fd_out, STDOUT_FILENO);
 		execve(path, inf->cmd_list->cmd, inf->env);
+	}
 	return (SUCESS);
 }

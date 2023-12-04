@@ -21,6 +21,9 @@
 
 void	ft_builtincheck(t_cmd *cmd);
 void	ft_cpyenv(char **env_cpy, char **envp);
+t_cmd	*ft_cmdlast(t_cmd *lst);
+void	ft_cmdadd_back(t_cmd **lst, t_cmd *new);
+void	ft_cmdadd_back(t_cmd **lst, t_cmd *new);
 
 /*malloc list : info.env
 				readline prompt

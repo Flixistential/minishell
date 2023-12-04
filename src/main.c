@@ -1,53 +1,61 @@
 
 #include "../include/minishell.h"
 
-t_cmd	*ft_cmdlast(t_cmd *lst)
+int index_command(t_info *inf)
 {
-	while (lst && lst->next != NULL)
+	t_cmd *temp;
+
+	inf->cmd_count = 0;
+	temp = inf->cmd_list;
+	while(temp)
 	{
-		lst = lst->next;
+		temp = temp->next;
+		inf->cmd_count++;
+		temp->index = inf->cmd_count;
 	}
-	return (lst);
+	if(inf->cmd_count >= 1)
+		return (SUCESS);
+	else
+		return (FAILURE);
+}
+
+int ft_redirection(t_info *inf)
+{
+	t_cmd 	*temp;
+
+	temp = inf->cmd_list;
+	while(temp->next != NULL)
+	{
+		ft_inputredir();
+		ft_outputredir();
+	}
 }
 
 
-void	ft_cmdadd_back(t_cmd **lst, t_cmd *new)
+ft_pipe(t_cmd *cmd_list)
 {
-	t_cmd	*temp;
+	int fd[2];
 
-	if (lst && *lst)
+	if (!pipe(fd))
+		return (FAILURE);
 	{
-		temp = *lst;
-		temp = ft_cmdlast (*lst);
-		temp->next = new;
-		return ;
+	cmd_list->fd_out = fd[1];
+	cmd_list->next->fd_in = fd[0];
 	}
-	*lst = new;
-}
 
+}
 
 void ft_cmdloop(t_info *inf)
 {
+	index_command(inf);
 	while (inf->cmd_list != NULL)
 	{
+		if (inf->cmd_list->next)
+			ft_redirection(inf->cmd_list);
 		ft_execute(inf);
 		inf->cmd_list = inf->cmd_list->next;
 	}
 
-}
-
-t_cmd	*ft_lstnewcmd(char *cmd)
-{
-	t_cmd	*elm;
-
-	elm = malloc(sizeof(t_cmd));
-	if (!elm)
-		return (NULL);
-	elm->cmd = ft_split(cmd, ' ');
-	elm->token = NULL;
-	ft_builtincheck(elm);
-	elm->next = NULL;
-	return (elm);
 }
 
 int ft_temptakecommand(int argc, char **argv, t_info *info)

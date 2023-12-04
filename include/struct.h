@@ -6,6 +6,14 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+enum e_redir_type
+{
+	REDIR_NONE,
+	REDIR_OVERWRITE,
+	REDIR_APPEND,
+	REDIR_INPUT
+};
+
 enum e_error_list{
 	FAILURE,
 	SUCESS,
@@ -16,7 +24,14 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	char			*token;
+	int				index;
 	pid_t			pid;
+	int				fd_in;
+	int				fd_out;
+	int 			redir_type;
+	char 			*infile;
+	char			*outfile;
+
 	struct s_cmd	*next;
 	bool			built_in;
 }			t_cmd;
@@ -25,6 +40,7 @@ typedef struct s_info
 {
 	t_cmd			*cmd_list;
 	t_cmd			*head;
+	int				cmd_count;
 	char 			**new_env;
 	char			**env;
 }			t_info;
