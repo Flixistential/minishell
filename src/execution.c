@@ -107,6 +107,8 @@ int	ft_execute(t_info *inf)
 	{
 		dup2(inf->cmd_list->fd_in, STDIN_FILENO);
 		dup2(inf->cmd_list->fd_out, STDOUT_FILENO);
+		close(inf->cmd_list->fd_out);
+		close(inf->cmd_list->fd_in);
 		execve(path, inf->cmd_list->cmd, inf->env);
 	}
 	return (SUCESS);

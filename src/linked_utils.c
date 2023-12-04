@@ -1,3 +1,5 @@
+#include "../include/minishell.h"
+
 t_cmd	*ft_lstnewcmd(char *cmd)
 {
 	t_cmd	*elm;
@@ -29,7 +31,7 @@ void	ft_cmdadd_back(t_cmd **lst, t_cmd *new)
 	if (lst && *lst)
 	{
 		temp = *lst;
-		temp = ft_cmdlast (*lst);
+		temp = ft_cmdlast(*lst);
 		temp->next = new;
 		return ;
 	}

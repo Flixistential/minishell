@@ -31,6 +31,7 @@ typedef struct s_cmd
 	int 			redir_type;
 	char 			*infile;
 	char			*outfile;
+	int				check;
 
 	struct s_cmd	*next;
 	bool			built_in;
