@@ -14,30 +14,33 @@ void ft_close(t_info *inf)
 	inf->cmd_list = inf->head;
 }
 
-int ft_inputredir(t_cmd **cmd)
+int ft_inputredir(t_cmd *cmd)
 {
 	int fd[2];
 
-	if(cmd[0]->index == 1)
+	cmd->check = 69;
+	if(cmd->index == 1)
 	{
-		//cmd[0]->fd_in = dup(STDIN_FILENO);
-		cmd[0]->fd_in = open("test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		//cmd->fd_in = dup(STDIN_FILENO);
+		cmd->fd_in = open("test.txt", O_RDONLY);
+		if (cmd->fd_in < 0) 
+        	perror("open");
+		//close(cmd[0]->fd_in);
 	}
-	if (cmd[0]->next)
+	if (cmd->next)
 	{
 		pipe(fd);
-		cmd[0]->fd_out = fd[1];
-		cmd[0]->next->fd_in = fd[0];
+		cmd->fd_out = fd[1];
+		cmd->next->fd_in = fd[0];
 	}
 	return(SUCESS);
 }
 
-int	ft_outputredir(t_cmd **cmd)
+int	ft_outputredir(t_cmd *cmd)
 {
-	if(!cmd[0]->next)
+	if(!cmd->next)
 	{
-		printf("%d\n", cmd[0]->index);
-		cmd[0]->fd_out = dup(STDOUT_FILENO);
+		cmd->fd_out = dup(STDOUT_FILENO);
 	}
 	return(SUCESS);
 }
@@ -67,8 +70,8 @@ int ft_redirection(t_info *inf)
 	t_cmd 	*temp;
 
 	temp = inf->cmd_list;
-	ft_inputredir(&temp);
-	ft_outputredir(&temp);
+	ft_inputredir(temp);
+	ft_outputredir(temp);
 	return(0);
 }
 
