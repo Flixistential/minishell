@@ -25,7 +25,8 @@ t_cmd	*ft_cmdlast(t_cmd *lst);
 void	ft_cmdadd_back(t_cmd **lst, t_cmd *new);
 void	ft_cmdadd_back(t_cmd **lst, t_cmd *new);
 
-void ft_close(t_info *inf);
+//void ft_close(t_info *inf);
+void ft_close(t_cmd *cmd);
 
 /*malloc list : info.env
 				readline prompt

@@ -1,7 +1,7 @@
 
 #include "../include/minishell.h"
 
-void ft_close(t_info *inf)
+/*void ft_close(t_info *inf)
 {
 	inf->cmd_list = inf->head;
 
@@ -12,7 +12,15 @@ void ft_close(t_info *inf)
 		inf->cmd_list = inf->cmd_list->next;
 	}
 	inf->cmd_list = inf->head;
+}*/
+
+
+void ft_close(t_cmd *cmd)
+{
+	close(cmd->fd_in);
+	close(cmd->fd_out);
 }
+
 
 int ft_inputredir(t_cmd *cmd)
 {
@@ -21,10 +29,10 @@ int ft_inputredir(t_cmd *cmd)
 	cmd->check = 69;
 	if(cmd->index == 1)
 	{
-		//cmd->fd_in = dup(STDIN_FILENO);
-		cmd->fd_in = open("test.txt", O_RDONLY);
+		cmd->fd_in = dup(STDIN_FILENO);
+		/*cmd->fd_in = open("test.txt", O_RDONLY);
 		if (cmd->fd_in < 0) 
-        	perror("open");
+        	perror("open");*/
 		//close(cmd[0]->fd_in);
 	}
 	if (cmd->next)
@@ -95,15 +103,15 @@ void ft_cmdloop(t_info *inf)
 	while (inf->cmd_list != NULL)
 	{
 		if (inf->cmd_list)
+		{
 			ft_redirection(inf);
+			ft_execute(inf);
+			ft_close(inf->cmd_list);
+		}
 		inf->cmd_list = inf->cmd_list->next;
 	}
 	inf->cmd_list = inf->head;
-	while (inf->cmd_list != NULL)
-	{
-		ft_execute(inf);
-		inf->cmd_list = inf->cmd_list->next;
-	}
+	
 }
 
 int ft_temptakecommand(int argc, char **argv, t_info *info)
@@ -159,10 +167,75 @@ int	main(int argc, char **argv, char **envp)
 	ft_temptakecommand(argc, argv, &info);
 	ft_cmdloop(&info);
 	info.cmd_list = info.head;
-	ft_close(&info);
+	//ft_close(&info);
 	while (info.cmd_list != NULL)
 	{
 		waitpid(info.cmd_list->pid, NULL, 0);
 		info.cmd_list = info.cmd_list->next;
 	}
+}
+
+/*
+
+int ft_inputredir(t_cmd *cmd)
+{
+	int fd[2];
+
+	cmd->check = 69;
+	if(cmd->index == 1)
+	{
+		cmd->fd_in = dup(STDIN_FILENO);
+		cmd->fd_in = open("test.txt", O_RDONLY);
+		if (cmd->fd_in < 0) 
+        	perror("open");
+		//close(cmd[0]->fd_in);
+	}
+	if (cmd->next)
+	{
+		pipe(fd);
+		cmd->fd_out = fd[1];
+		cmd->next->fd_in = fd[0];
+	}
+	return(SUCESS);
+}
+
+int	ft_outputredir(t_cmd *cmd)
+{
+	if(!cmd->next)
+	{
+		cmd->fd_out = dup(STDOUT_FILENO);
+	}
+	return(SUCESS);
+}
+input 	- NONE
+		- PIPE
+		- FILE
+		- HEREDOC
+
+output 	-NONE
+		-PIPE
+		-Outfile
+		-APPEND
+
+*/
+
+
+int ft_inputredir(t_cmd *cmd)
+{
+	if(cmd->redir_type = REDIR_NONE)
+		ft_stdin(cmd);
+	else if(cmd->redir_type = REDIR_INPUT)
+		ft_infile(cmd);
+	else if(cmd->redir_type = REDIR_HEREDOC)
+		ft_heredoc(cmd);
+}
+
+int ft_outputredir(t_cmd *cmd)
+{
+	if(cmd->redir_type = REDIR_NONE)
+		ft_stdout(cmd);
+	else if(cmd->redir_type = REDIR_INPUT)
+		ft_infile(cmd);
+	else if(cmd->redir_type = REDIR_HEREDOC)
+		ft_heredoc(cmd);
 }

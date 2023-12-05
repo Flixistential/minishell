@@ -8,13 +8,16 @@
 
 enum e_redir_type
 {
-	REDIR_NONE,
-	REDIR_OVERWRITE,
-	REDIR_APPEND,
-	REDIR_INPUT
+	REDIR_NONE, 	//stdin stdout
+	REDIR_INPUT,	// <
+	REDIR_OVERWRITE,// >
+	REDIR_APPEND,	// >>
+	REDIR_HEREDOC,	// <<
+	REDIR_PIPE		// |
 };
 
-enum e_error_list{
+enum e_error_list
+{
 	FAILURE,
 	SUCESS,
 	MALLOC_FAIL,
