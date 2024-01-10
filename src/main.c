@@ -14,34 +14,10 @@
 	inf->cmd_list = inf->head;
 }*/
 
-
-void ft_close(t_cmd *cmd)
+void	ft_close(t_cmd *cmd)
 {
-	close(cmd->fd_in);
+	//close(cmd->fd_in);
 	close(cmd->fd_out);
-}
-
-
-int ft_inputredir(t_cmd *cmd)
-{
-	int fd[2];
-
-	cmd->check = 69;
-	if(cmd->index == 1)
-	{
-		cmd->fd_in = dup(STDIN_FILENO);
-		/*cmd->fd_in = open("test.txt", O_RDONLY);
-		if (cmd->fd_in < 0) 
-        	perror("open");*/
-		//close(cmd[0]->fd_in);
-	}
-	if (cmd->next)
-	{
-		pipe(fd);
-		cmd->fd_out = fd[1];
-		cmd->next->fd_in = fd[0];
-	}
-	return(SUCESS);
 }
 
 int	ft_outputredir(t_cmd *cmd)
@@ -52,6 +28,7 @@ int	ft_outputredir(t_cmd *cmd)
 	}
 	return(SUCESS);
 }
+
 
 int index_command(t_info *inf)
 {
@@ -67,34 +44,33 @@ int index_command(t_info *inf)
 		inf->cmd_count++;
 		temp = temp->next;
 	}
-	if(inf->cmd_count >= 1)
+	if (inf->cmd_count >= 1)
 		return (SUCESS);
 	else
 		return (FAILURE);
 }
 
-int ft_redirection(t_info *inf)
+int	ft_redirection(t_info *inf)
 {
-	t_cmd 	*temp;
+	t_cmd	*temp;
 
 	temp = inf->cmd_list;
 	ft_inputredir(temp);
-	ft_outputredir(temp);
-	return(0);
+	//ft_outputredir(temp);
+	return (0);
 }
 
-
-int ft_pipe(t_cmd *cmd_list)
+int	ft_pipe(t_cmd *cmd_list)
 {
 	int fd[2];
 
 	if (!pipe(fd))
 		return (FAILURE);
 	{
-	cmd_list->fd_out = fd[1];
-	cmd_list->next->fd_in = fd[0];
+		cmd_list->fd_out = fd[1];
+		cmd_list->next->fd_in = fd[0];
 	}
-	return(SUCESS);
+	return (SUCESS);
 }
 
 void ft_cmdloop(t_info *inf)
@@ -110,18 +86,17 @@ void ft_cmdloop(t_info *inf)
 		}
 		inf->cmd_list = inf->cmd_list->next;
 	}
-	inf->cmd_list = inf->head;
-	
+	inf->cmd_list = inf->head;	
 }
 
-int ft_temptakecommand(int argc, char **argv, t_info *info)
+int	ft_temptakecommand(int argc, char **argv, t_info *info)
 {
 	int	i;
 
 	i = 1;
 	while (i < argc)
 	{
-		ft_cmdadd_back(&info->cmd_list ,ft_lstnewcmd(argv[i]));
+		ft_cmdadd_back(&info->cmd_list, ft_lstnewcmd(argv[i]));
 		i++;
 	}
 	info->head = info->cmd_list;
@@ -175,38 +150,23 @@ int	main(int argc, char **argv, char **envp)
 	}
 }
 
-/*
-
 int ft_inputredir(t_cmd *cmd)
 {
 	int fd[2];
 
-	cmd->check = 69;
-	if(cmd->index == 1)
-	{
-		cmd->fd_in = dup(STDIN_FILENO);
-		cmd->fd_in = open("test.txt", O_RDONLY);
-		if (cmd->fd_in < 0) 
-        	perror("open");
-		//close(cmd[0]->fd_in);
-	}
 	if (cmd->next)
 	{
 		pipe(fd);
 		cmd->fd_out = fd[1];
 		cmd->next->fd_in = fd[0];
+		//printf("%d\n", cmd->next->fd_in);
 	}
+	else
+		ft_outputredir(cmd);
 	return(SUCESS);
 }
 
-int	ft_outputredir(t_cmd *cmd)
-{
-	if(!cmd->next)
-	{
-		cmd->fd_out = dup(STDOUT_FILENO);
-	}
-	return(SUCESS);
-}
+/*
 input 	- NONE
 		- PIPE
 		- FILE
@@ -216,26 +176,24 @@ output 	-NONE
 		-PIPE
 		-Outfile
 		-APPEND
-
 */
-
-
-int ft_inputredir(t_cmd *cmd)
+/*
+int	ft_inputredir(t_cmd *cmd)
 {
-	if(cmd->redir_type = REDIR_NONE)
+	if (cmd->redir_type = REDIR_NONE)
 		ft_stdin(cmd);
-	else if(cmd->redir_type = REDIR_INPUT)
+	else if (cmd->redir_type = REDIR_INPUT)
 		ft_infile(cmd);
-	else if(cmd->redir_type = REDIR_HEREDOC)
+	else if (cmd->redir_type = REDIR_HEREDOC)
 		ft_heredoc(cmd);
 }
 
-int ft_outputredir(t_cmd *cmd)
+int	ft_outputredir(t_cmd *cmd)
 {
-	if(cmd->redir_type = REDIR_NONE)
+	if (cmd->redir_type = REDIR_NONE)
 		ft_stdout(cmd);
-	else if(cmd->redir_type = REDIR_INPUT)
+	else if (cmd->redir_type = REDIR_INPUT)
 		ft_infile(cmd);
-	else if(cmd->redir_type = REDIR_HEREDOC)
+	else if (cmd->redir_type = REDIR_HEREDOC)
 		ft_heredoc(cmd);
-}
+}*/

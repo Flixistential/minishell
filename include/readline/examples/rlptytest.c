@@ -41,7 +41,7 @@
 static int masterfd = -1;
 static int slavefd;
 
-void
+void	
 sigint (s)
      int s;
 {

@@ -4,6 +4,7 @@
 
 # include "minishell.h"
 
+int 	ft_echo(char **cmd);
 int		ft_pwd(void);
 int		ft_executebuiltin(t_info *inf);
 int		ft_env(char **env);

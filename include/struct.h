@@ -35,7 +35,6 @@ typedef struct s_cmd
 	char 			*infile;
 	char			*outfile;
 	int				check;
-
 	struct s_cmd	*next;
 	bool			built_in;
 }			t_cmd;

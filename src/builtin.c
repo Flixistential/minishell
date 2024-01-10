@@ -94,7 +94,7 @@ int	ft_pwd(void)
 int	ft_executebuiltin(t_info *inf)
 {
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "echo", 5))
-		return (0/*ft_echo(inf->cmd_list->cmd)*/);
+		return (ft_echo(inf->cmd_list->cmd));
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "cd", 3)) 
 		return (ft_cd(inf->cmd_list->cmd, inf->env));
 	if (!ft_strncmp(inf->cmd_list->cmd[0], "pwd", 4))

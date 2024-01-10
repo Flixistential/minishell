@@ -13,5 +13,7 @@ char	*ft_strjoinslash(char const *s1, char const *s2);
 t_cmd	*ft_lstnewcmd(char *cmd);
 int 	ft_temptakecommand(int argc, char **argv, t_info *info);
 void 	ft_cmdloop(t_info *inf);
+int 	ft_inputredir(t_cmd *cmd);
+int		ft_outputredir(t_cmd *cmd);
 
 #endif

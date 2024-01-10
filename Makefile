@@ -10,7 +10,8 @@ SRC =	./src/main.c\
 		.src/init.c\
 		.src/unset.c\
 		./src/export.c\
-		./src/linked_utils.c
+		./src/linked_utils.c\
+		./src/echo.c
 		
 	
 OBJ_DIR = obj

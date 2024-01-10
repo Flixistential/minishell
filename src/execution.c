@@ -89,11 +89,11 @@ int	ft_execute(t_info *inf)
 {
 	char	*path;
 
-	if (inf->cmd_list->built_in == true)
+	/*if (inf->cmd_list->built_in == true)
 	{
 		ft_executebuiltin(inf);
 		return (SUCESS);
-	}
+	}*/
 	path = truepath(inf->cmd_list->cmd[0], inf->env);
 	if (!path)
 	{
@@ -109,7 +109,13 @@ int	ft_execute(t_info *inf)
 		dup2(inf->cmd_list->fd_out, STDOUT_FILENO);
 		close(inf->cmd_list->fd_out);
 		close(inf->cmd_list->fd_in);
-		execve(path, inf->cmd_list->cmd, inf->env);
+		if (inf->cmd_list->built_in == true)
+		{
+			ft_executebuiltin(inf);
+			exit(0);
+		}
+		else
+			execve(path, inf->cmd_list->cmd, inf->env);
 	}
 	return (SUCESS);
 }
