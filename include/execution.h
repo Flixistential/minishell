@@ -15,5 +15,12 @@ int 	ft_temptakecommand(int argc, char **argv, t_info *info);
 void 	ft_cmdloop(t_info *inf);
 int 	ft_inputredir(t_cmd *cmd);
 int		ft_outputredir(t_cmd *cmd);
-
+int		ft_stdin(t_cmd *cmd);
+int 	ft_infile(t_cmd *cmd);
+int 	ft_heredoc(t_cmd *cmd);
+int 	ft_stdout(t_cmd *cmd);
+int 	ft_infile(t_cmd *cmd);
+int 	ft_heredoc(t_cmd *cmd);
+int 	ft_outfile(t_cmd *cmd);
+int 	ft_append(t_cmd *cmd);
 #endif

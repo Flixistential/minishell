@@ -105,6 +105,8 @@ int	ft_execute(t_info *inf)
 	inf->cmd_list->pid = fork();
 	if (inf->cmd_list->pid == 0)
 	{
+		printf("%d\n", inf->cmd_list->fd_in);
+		printf("%d\n", inf->cmd_list->fd_out);
 		dup2(inf->cmd_list->fd_in, STDIN_FILENO);
 		dup2(inf->cmd_list->fd_out, STDOUT_FILENO);
 		close(inf->cmd_list->fd_out);

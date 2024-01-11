@@ -11,7 +11,8 @@ SRC =	./src/main.c\
 		.src/unset.c\
 		./src/export.c\
 		./src/linked_utils.c\
-		./src/echo.c
+		./src/echo.c\
+		./src/redirection.c
 		
 	
 OBJ_DIR = obj

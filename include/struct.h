@@ -31,7 +31,8 @@ typedef struct s_cmd
 	pid_t			pid;
 	int				fd_in;
 	int				fd_out;
-	int 			redir_type;
+	int 			in_type;
+	int				out_type;
 	char 			*infile;
 	char			*outfile;
 	int				check;

@@ -20,16 +20,6 @@ void	ft_close(t_cmd *cmd)
 	close(cmd->fd_out);
 }
 
-int	ft_outputredir(t_cmd *cmd)
-{
-	if(!cmd->next)
-	{
-		cmd->fd_out = dup(STDOUT_FILENO);
-	}
-	return(SUCESS);
-}
-
-
 int index_command(t_info *inf)
 {
 	t_cmd *temp;
@@ -56,7 +46,7 @@ int	ft_redirection(t_info *inf)
 
 	temp = inf->cmd_list;
 	ft_inputredir(temp);
-	//ft_outputredir(temp);
+	ft_outputredir(temp);
 	return (0);
 }
 
@@ -80,6 +70,18 @@ void ft_cmdloop(t_info *inf)
 	{
 		if (inf->cmd_list)
 		{
+			if(inf->cmd_list->index == 1)
+			{
+				inf->cmd_list->in_type = REDIR_NONE;
+				inf->cmd_list->out_type = REDIR_PIPE;
+			}
+			if(inf->cmd_list->index == 2)
+			{
+				inf->cmd_list->in_type = REDIR_PIPE;
+				inf->cmd_list->out_type = REDIR_NONE;
+			}
+			if(inf->cmd_list->next)
+				ft_pipe(inf->cmd_list);
 			ft_redirection(inf);
 			ft_execute(inf);
 			ft_close(inf->cmd_list);
@@ -150,7 +152,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 }
 
-int ft_inputredir(t_cmd *cmd)
+/*int ft_inputredir(t_cmd *cmd)
 {
 	int fd[2];
 
@@ -159,12 +161,11 @@ int ft_inputredir(t_cmd *cmd)
 		pipe(fd);
 		cmd->fd_out = fd[1];
 		cmd->next->fd_in = fd[0];
-		//printf("%d\n", cmd->next->fd_in);
 	}
 	else
 		ft_outputredir(cmd);
 	return(SUCESS);
-}
+}*/
 
 /*
 input 	- NONE
@@ -177,23 +178,28 @@ output 	-NONE
 		-Outfile
 		-APPEND
 */
-/*
+
 int	ft_inputredir(t_cmd *cmd)
 {
-	if (cmd->redir_type = REDIR_NONE)
-		ft_stdin(cmd);
-	else if (cmd->redir_type = REDIR_INPUT)
-		ft_infile(cmd);
-	else if (cmd->redir_type = REDIR_HEREDOC)
-		ft_heredoc(cmd);
+	if (cmd->in_type == REDIR_NONE)
+		return(ft_stdin(cmd));
+	else if (cmd->in_type == REDIR_INPUT)
+		return(ft_infile(cmd));
+	else if (cmd->in_type == REDIR_HEREDOC)
+		return(ft_heredoc(cmd));
+	else if (cmd->in_type == REDIR_PIPE)
+		return (SUCESS);
+	return (FAILURE);
 }
-
 int	ft_outputredir(t_cmd *cmd)
 {
-	if (cmd->redir_type = REDIR_NONE)
-		ft_stdout(cmd);
-	else if (cmd->redir_type = REDIR_INPUT)
-		ft_infile(cmd);
-	else if (cmd->redir_type = REDIR_HEREDOC)
-		ft_heredoc(cmd);
-}*/
+	if (cmd->out_type == REDIR_NONE)
+		return(ft_stdout(cmd));
+	else if (cmd->out_type == REDIR_OVERWRITE)
+		return(ft_outfile(cmd));
+	else if (cmd->out_type == REDIR_APPEND)
+		return(ft_append(cmd));
+	else if(cmd->out_type == REDIR_PIPE)
+		return (SUCESS);
+	return (FAILURE);
+}
