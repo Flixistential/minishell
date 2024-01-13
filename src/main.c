@@ -42,23 +42,20 @@ int index_command(t_info *inf)
 
 int	ft_redirection(t_info *inf)
 {
-	t_cmd	*temp;
-
-	temp = inf->cmd_list;
-	ft_inputredir(temp);
-	ft_outputredir(temp);
+	ft_inputredir(inf->cmd_list);
+	ft_outputredir(inf->cmd_list);
 	return (0);
 }
 
-int	ft_pipe(t_cmd *cmd_list)
+int	ft_pipe(t_info *inf)
 {
 	int fd[2];
 
-	if (!pipe(fd))
-		return (FAILURE);
+	if (pipe(fd)){
+		return (FAILURE);}
 	{
-		cmd_list->fd_out = fd[1];
-		cmd_list->next->fd_in = fd[0];
+		inf->cmd_list->fd_out = fd[1];
+		inf->cmd_list->next->fd_in = fd[0];
 	}
 	return (SUCESS);
 }
@@ -78,10 +75,15 @@ void ft_cmdloop(t_info *inf)
 			if(inf->cmd_list->index == 2)
 			{
 				inf->cmd_list->in_type = REDIR_PIPE;
-				inf->cmd_list->out_type = REDIR_NONE;
+				inf->cmd_list->out_type = REDIR_PIPE;
+			}
+			if(inf->cmd_list->index == 3)
+			{
+				inf->cmd_list->in_type = REDIR_PIPE;
+				inf->cmd_list->out_type = REDIR_APPEND;
 			}
 			if(inf->cmd_list->next)
-				ft_pipe(inf->cmd_list);
+				ft_pipe(inf);
 			ft_redirection(inf);
 			ft_execute(inf);
 			ft_close(inf->cmd_list);
