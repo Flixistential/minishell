@@ -23,4 +23,6 @@ int 	ft_infile(t_cmd *cmd);
 int 	ft_heredoc(t_cmd *cmd);
 int 	ft_outfile(t_cmd *cmd);
 int 	ft_append(t_cmd *cmd);
+int 	ft_makedoc(t_cmd *cmd);
+int 	ft_editdoc(int fd, t_cmd *cmd);
 #endif

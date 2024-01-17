@@ -12,7 +12,8 @@ SRC =	./src/main.c\
 		./src/export.c\
 		./src/linked_utils.c\
 		./src/echo.c\
-		./src/redirection.c
+		./src/redirection.c\
+		./src/heredoc.c
 		
 	
 OBJ_DIR = obj

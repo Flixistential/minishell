@@ -26,13 +26,6 @@ int ft_infile(t_cmd *cmd)
 	return (SUCESS);
 }
 
-int ft_heredoc(t_cmd *cmd)
-{
-	if(cmd)
-		return (0);
-	return(0);
-}
-
 int ft_stdout(t_cmd *cmd)
 {
 	if(cmd)

@@ -69,15 +69,15 @@ void ft_cmdloop(t_info *inf)
 		{
 			if(inf->cmd_list->index == 1)
 			{
-				inf->cmd_list->in_type = REDIR_NONE;
+				inf->cmd_list->in_type = REDIR_HEREDOC;
 				inf->cmd_list->out_type = REDIR_PIPE;
 			}
-			if(inf->cmd_list->index == 2)
+			/*if(inf->cmd_list->index == 2)
 			{
 				inf->cmd_list->in_type = REDIR_PIPE;
 				inf->cmd_list->out_type = REDIR_PIPE;
-			}
-			if(inf->cmd_list->index == 3)
+			}*/
+			if(inf->cmd_list->index == 2)
 			{
 				inf->cmd_list->in_type = REDIR_PIPE;
 				inf->cmd_list->out_type = REDIR_APPEND;
