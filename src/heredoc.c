@@ -11,15 +11,34 @@ int ft_heredoc(t_cmd *cmd)
 
 int ft_editdoc(int fd, t_cmd *cmd)
 {
-	char *tmp;
+	char 		*tmp;
+	struct stat init;
+	struct stat mod;
+	mode_t 		mode;
+	int 		f;
 	
-	tmp = NULL;
-	while(ft_strncmp("stop", tmp, 4) != 0)
+	if(cmd)
+		tmp = NULL;
+	f = stat("heredoc", &init);
+	mode = init.st_mode;
+	tmp = readline("heredoc >");
+	while(f = 0)
 	{
-		tmp = readline("heredoc >");
-			if (cmd)
-		ft_putendl_fd(tmp, fd);
+		f = stat("heredoc", &mod);
+		if(f != 0 || mode != mod.st_mode)
+		{
+			ft_putstr_fd("File was tempered\n", 2);
+			break;
+		}
+		
 	}
+	if(ft_strncmp("stop", tmp, 5) != 0)
+	{
+		free(tmp);
+		return(SUCESS);
+	}
+	ft_putendl_fd(tmp, fd);
+	free(tmp);
 	return (SUCESS);
 }
 
@@ -31,5 +50,7 @@ int ft_makedoc(t_cmd *cmd)
 	if(cmd)
 		i = 1;
 	fd = open("heredoc", O_CREAT | O_TRUNC | O_RDWR, 0644);
+	if (fd < 0)
+		ft_putstr_fd("cant make file", 2);
 	return(fd);
 }
